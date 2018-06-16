@@ -1346,8 +1346,8 @@ static void DrawBackgroundMosaic (int bg, uint8 Zh, uint8 Zl)
 		for (uint32 Y = GFX.StartY - MosaicStart; Y <= GFX.EndY; Y += PPU.Mosaic)
 		{
 			uint32	Y2 = HiresInterlace ? Y * 2 : Y;
-			uint32	VOffset = LineData[Y].BG[bg].VOffset + (HiresInterlace ? 1 : 0);
-			uint32	HOffset = LineData[Y].BG[bg].HOffset;
+			uint32	VOffset = LineData[Y + MosaicStart].BG[bg].VOffset + (HiresInterlace ? 1 : 0);
+			uint32	HOffset = LineData[Y + MosaicStart].BG[bg].HOffset;
 
 			Lines = PPU.Mosaic - MosaicStart;
 			if (Y + MosaicStart + Lines > GFX.EndY)
@@ -1754,8 +1754,8 @@ static void DrawBackgroundOffsetMosaic (int bg, uint8 Zh, uint8 Zl, int VOffOff)
 		for (uint32 Y = GFX.StartY - MosaicStart; Y <= GFX.EndY; Y += PPU.Mosaic)
 		{
 			uint32	Y2 = HiresInterlace ? Y * 2 : Y;
-			uint32	VOff = LineData[Y].BG[2].VOffset - 1;
-			uint32	HOff = LineData[Y].BG[2].HOffset;
+			uint32	VOff = LineData[Y + MosaicStart].BG[2].VOffset - 1;
+			uint32	HOff = LineData[Y + MosaicStart].BG[2].HOffset;
 
 			Lines = PPU.Mosaic - MosaicStart;
 			if (Y + MosaicStart + Lines > GFX.EndY)
@@ -1784,7 +1784,7 @@ static void DrawBackgroundOffsetMosaic (int bg, uint8 Zh, uint8 Zl, int VOffOff)
 			uint32	Left =  GFX.Clip[bg].Left[clip];
 			uint32	Right = GFX.Clip[bg].Right[clip];
 			uint32	Offset = Left * PixWidth + (Y + MosaicStart) * GFX.PPL;
-			uint32	HScroll = LineData[Y].BG[bg].HOffset;
+			uint32	HScroll = LineData[Y + MosaicStart].BG[bg].HOffset;
 			uint32	Width = Right - Left;
 
 			while (Left < Right)
@@ -1794,7 +1794,7 @@ static void DrawBackgroundOffsetMosaic (int bg, uint8 Zh, uint8 Zl, int VOffOff)
 				if (Left < (8 - (HScroll & 7)))
 				{
 					// SNES cannot do OPT for leftmost tile column
-					VOffset = LineData[Y].BG[bg].VOffset;
+					VOffset = LineData[Y + MosaicStart].BG[bg].VOffset;
 					HOffset = HScroll;
 				}
 				else
@@ -1835,7 +1835,7 @@ static void DrawBackgroundOffsetMosaic (int bg, uint8 Zh, uint8 Zl, int VOffOff)
 					if (VCellOffset & OffsetEnableMask)
 						VOffset = VCellOffset + 1;
 					else
-						VOffset = LineData[Y].BG[bg].VOffset;
+						VOffset = LineData[Y + MosaicStart].BG[bg].VOffset;
 
 					if (HCellOffset & OffsetEnableMask)
 						HOffset = (HCellOffset & ~7) | (HScroll & 7);
