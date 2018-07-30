@@ -484,7 +484,7 @@ void S9xSetPPU (uint8 Byte, uint16 Address)
 
 			case 0x2102: // OAMADDL
 				PPU.OAMAddr = ((Memory.FillRAM[0x2103] & 1) << 8) | Byte;
-				PPU.OAMFlip = 2;
+				PPU.OAMFlip = 0;
 				PPU.OAMReadFlip = 0;
 				PPU.SavedOAMAddr = PPU.OAMAddr;
 				if (PPU.OAMPriorityRotation && PPU.FirstSprite != (PPU.OAMAddr >> 1))
@@ -545,7 +545,10 @@ void S9xSetPPU (uint8 Byte, uint16 Address)
 					PPU.BGMode = Byte & 7;
 					// BJ: BG3Priority only takes effect if BGMode == 1 and the bit is set
 					PPU.BG3Priority = ((Byte & 0x0f) == 0x09);
-					IPPU.Interlace = Memory.FillRAM[0x2133] & 1;
+					if (PPU.BGMode == 6 || PPU.BGMode == 5 || PPU.BGMode == 7)
+					    IPPU.Interlace = Memory.FillRAM[0x2133] & 1;
+					else
+					    IPPU.Interlace = 0;
 				#ifdef DEBUGGER
 					missing.modes[PPU.BGMode] = 1;
 				#endif
@@ -1067,6 +1070,7 @@ void S9xSetPPU (uint8 Byte, uint16 Address)
 						FLUSH_REDRAW();
 						if ((Memory.FillRAM[0x2133] ^ Byte) & 2)
 							IPPU.OBJChanged = TRUE;
+
 						IPPU.Interlace = Byte & 1;
 						IPPU.InterlaceOBJ = Byte & 2;
 					}
@@ -2101,4 +2105,5 @@ void S9xSoftResetPPU (void)
 	memset(&Memory.FillRAM[0x1000], 0, 0x1000);
 
 	Memory.FillRAM[0x4201] = Memory.FillRAM[0x4213] = 0xff;
+	Memory.FillRAM[0x2126] = Memory.FillRAM[0x2128] = 1;
 }
