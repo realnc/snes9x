@@ -60,6 +60,7 @@ bool g_geometry_update = false;
 
 int hires_blend = 0;
 bool randomize_memory = false;
+int disabled_channels = 0;
 
 char retro_system_directory[4096];
 char retro_save_directory[4096];
@@ -338,7 +339,6 @@ static void update_variables(void)
     else
         Settings.UpAndDown = false;
 
-    int disabled_channels=0;
     strcpy(key, "snes9x_sndchan_x");
     var.key=key;
     for (int i=0;i<8;i++)
@@ -1151,6 +1151,12 @@ bool retro_load_game(const struct retro_game_info *game)
             srand(time(NULL));
             for(int lcv = 0; lcv < 0x20000; lcv++)
                 Memory.RAM[lcv] = rand() % 256;
+        }
+        
+        // restore disabled sound channels
+        if (disabled_channels)
+        {
+            S9xSetSoundControl(disabled_channels^0xFF);
         }
     }
 
@@ -1996,6 +2002,12 @@ bool retro_unserialize(const void* data, size_t size)
     if (S9xUnfreezeGameMem((const uint8_t*)data,size) != SUCCESS)
         return false;
 
+    // restore disabled sound channels
+    if (disabled_channels)
+    {
+        S9xSetSoundControl(disabled_channels^0xFF);
+    }
+    
     return true;
 }
 
