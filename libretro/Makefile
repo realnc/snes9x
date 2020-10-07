@@ -249,6 +249,7 @@ else ifeq ($(platform), vita)
    AR = arm-vita-eabi-ar$(EXE_EXT)
    CXXFLAGS += -DVITA
    HAVE_EXCEPTIONS = 1
+   STATIC_LINKING = 1
 
 # PS3
 else ifneq (,$(filter $(platform), ps3 sncps3 psl1ght))
