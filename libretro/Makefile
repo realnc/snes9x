@@ -96,9 +96,10 @@ else ifeq ($(platform), osx)
 # Nintendo Switch (libnx)
 else ifeq ($(platform), libnx)
    include $(DEVKITPRO)/libnx/switch_rules
+   PORTLIBS := $(PORTLIBS_PATH)/switch
    TARGET := $(TARGET_NAME)_libretro_$(platform).a
    DEFINES := -DSWITCH=1 -D__SWITCH__ -DARM
-   CFLAGS := $(DEFINES) -fPIE -I$(LIBNX)/include/ -ffunction-sections -fdata-sections -ftls-model=local-exec -specs=$(LIBNX)/switch.specs
+   CFLAGS := $(DEFINES) -fPIE -I$(PORTLIBS)/include/ -I$(LIBNX)/include/ -ffunction-sections -fdata-sections -ftls-model=local-exec -specs=$(LIBNX)/switch.specs
    CFLAGS += -march=armv8-a -mtune=cortex-a57 -mtp=soft -mcpu=cortex-a57+crc+fp+simd -ffast-math
    CXXFLAGS := $(ASFLAGS) $(CFLAGS)
    STATIC_LINKING = 1
