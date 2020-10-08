@@ -649,6 +649,8 @@ else
 	LD = link.exe
 endif
 else
+	OBJOUT   = -o
+	LINKOUT  = -o
 	LD = $(CXX)
 endif
 
