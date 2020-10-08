@@ -102,7 +102,7 @@ else ifeq ($(platform), libnx)
    CFLAGS := $(DEFINES) -fPIE -I$(PORTLIBS)/include/ -I$(LIBNX)/include/ -ffunction-sections -fdata-sections -ftls-model=local-exec -specs=$(LIBNX)/switch.specs
    CFLAGS += -march=armv8-a -mtune=cortex-a57 -mtp=soft -mcpu=cortex-a57+crc+fp+simd -ffast-math
    CXXFLAGS := $(ASFLAGS) $(CFLAGS)
-   STATIC_LINKING = 1
+   STATIC_LINKING=1
 
 # Classic Platforms ####################
 # Platform affix = classic_<ISA>_<µARCH>
@@ -250,14 +250,14 @@ else ifeq ($(platform), vita)
    AR = arm-vita-eabi-ar$(EXE_EXT)
    CXXFLAGS += -DVITA
    HAVE_EXCEPTIONS = 1
-   STATIC_LINKING = 1
+   STATIC_LINKING=1
    LTO =
 
 # PS3
 else ifneq (,$(filter $(platform), ps3 sncps3 psl1ght))
    TARGET := $(TARGET_NAME)_libretro_$(platform).a
    CXXFLAGS += -DBLARGG_BIG_ENDIAN=1 -D__ppc__
-   STATIC_LINKING = 1
+   STATIC_LINKING=1
    HAVE_STRINGS_H = 0
 
    # sncps3
@@ -290,7 +290,7 @@ else ifeq ($(platform), xenon)
    CXX = xenon-g++$(EXE_EXT)
    AR = xenon-ar$(EXE_EXT)
    CXXFLAGS += -D__LIBXENON__ -m32 -D__ppc__
-   STATIC_LINKING = 1
+   STATIC_LINKING=1
 
 # Nintendo Game Cube / Wii / WiiU
 else ifneq (,$(filter $(platform), ngc wii wiiu))
@@ -300,7 +300,7 @@ else ifneq (,$(filter $(platform), ngc wii wiiu))
    AR = $(DEVKITPPC)/bin/powerpc-eabi-ar$(EXE_EXT)
    CXXFLAGS += -mcpu=750 -meabi -mhard-float -DBLARGG_BIG_ENDIAN=1 -D__ppc__
    CXXFLAGS += -U__INT32_TYPE__ -U __UINT32_TYPE__ -D__INT32_TYPE__=int
-   STATIC_LINKING = 1
+   STATIC_LINKING=1
 
    # Nintendo WiiU
    ifneq (,$(findstring wiiu,$(platform)))
@@ -318,7 +318,7 @@ else ifneq (,$(filter $(platform), ngc wii wiiu))
 # Emscripten
 else ifeq ($(platform), emscripten)
    TARGET := $(TARGET_NAME)_libretro_$(platform).bc
-   STATIC_LINKING = 1
+   STATIC_LINKING=1
 
 # Windows MSVC 2003 Xbox 1
 else ifeq ($(platform), xbox1_msvc2003)
@@ -658,7 +658,7 @@ else
 all: $(TARGET)
 
 $(TARGET): $(OBJECTS)
-ifeq ($(STATIC_LINKING), 1)
+ifeq ($(STATIC_LINKING),1)
 	$(AR) rcs $@ $(OBJECTS)
 else
 	$(LD) $(fpic) $(SHARED) $(LINKOUT)$@ $(OBJECTS) $(LDFLAGS) $(LIBS)
