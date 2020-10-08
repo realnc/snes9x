@@ -243,7 +243,7 @@ else ifeq ($(platform), vita)
    CFLAGS += $(LTO)
    CXXFLAGS += $(LTO)
    LDFLAGS += $(LTO)
-   TARGET := $(TARGET_NAME)_libretro_$(platform).so
+   TARGET := $(TARGET_NAME)_libretro_$(platform).a
    fpic := -fPIC
    CC = arm-vita-eabi-gcc$(EXE_EXT)
    CXX = arm-vita-eabi-g++$(EXE_EXT)
