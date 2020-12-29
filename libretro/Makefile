@@ -305,12 +305,8 @@ else ifneq (,$(filter $(platform), ngc wii wiiu))
    STATIC_LINKING=1
    STATIC_LINKING_LINK=1
 
-   # Nintendo WiiU
-   ifneq (,$(findstring wiiu,$(platform)))
-      CXXFLAGS += -mwup
-
    # Nintendo Wii
-   else ifneq (,$(findstring wii,$(platform)))
+   ifneq (,$(findstring wii,$(platform)))
       CXXFLAGS += -DGEKKO -mrvl
 
    # Nintendo Game Cube
