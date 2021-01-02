@@ -94,6 +94,21 @@ else ifeq ($(platform), osx)
       fpic += -mmacosx-version-min=10.1
    endif
 
+# CTR (3DS)
+else ifeq ($(platform), ctr)
+	EXT=a
+	TARGET := $(TARGET_NAME)_libretro_$(platform).$(EXT)
+	CC = $(DEVKITARM)/bin/arm-none-eabi-gcc$(EXE_EXT)
+	CXX= $(DEVKITARM)/bin/arm-none-eabi-g++$(EXE_EXT)
+	AR = $(DEVKITARM)/bin/arm-none-eabi-ar$(EXE_EXT)
+	CFLAGS += -DARM11 -D_3DS
+	CFLAGS += -march=armv6k -mtune=mpcore -mfloat-abi=hard
+	CFLAGS += -Wall -mword-relocations
+	CFLAGS += -fomit-frame-pointer -ffast-math
+	CXXFLAGS := -DARM11 -D_3DS -march=armv6k -mtune=mpcore -mfloat-abi=hard -Wall -mword-relocations -fomit-frame-pointer -ffast-math
+	STATIC_LINKING=1
+	STATIC_LINKING_LINK=1
+
 # Nintendo Switch (libnx)
 else ifeq ($(platform), libnx)
    include $(DEVKITPRO)/libnx/switch_rules

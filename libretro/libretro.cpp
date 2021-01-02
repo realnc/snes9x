@@ -2167,18 +2167,18 @@ const char* S9xGetDirectory(s9x_getdirtype type)
 void S9xInitInputDevices() {}
 const char* S9xChooseFilename(unsigned char) { return ""; }
 void S9xHandlePortCommand(s9xcommand_t, short, short) {}
-bool S9xPollButton(unsigned int, bool*) { return false; }
+bool S9xPollButton(uint32, bool*) { return false; }
 void S9xToggleSoundChannel(int) {}
 const char* S9xGetFilenameInc(const char* in, s9x_getdirtype) { return ""; }
 const char* S9xBasename(const char* in) { return in; }
 bool8 S9xInitUpdate() { return TRUE; }
 void S9xExtraUsage() {}
 bool8 S9xOpenSoundDevice() { return TRUE; }
-bool S9xPollAxis(unsigned int, short*) { return FALSE; }
+bool S9xPollAxis(uint32, short*) { return FALSE; }
 void S9xSetPalette() {}
 void S9xParseArg(char**, int&, int) {}
 void S9xExit() {}
-bool S9xPollPointer(unsigned int, short*, short*) { return false; }
+bool S9xPollPointer(uint32, short*, short*) { return false; }
 
 const char *S9xChooseMovieFilename(unsigned char) { return NULL; }
 void S9xMessage(int type, int, const char* s)
