@@ -72,6 +72,18 @@ ifneq (,$(findstring unix,$(platform)))
       CXXFLAGS += -DARM
    endif
 
+# ODROIDN2
+else ifneq (,$(findstring CortexA73_G12B,$(platform)))
+	TARGET := $(TARGET_NAME)_libretro.so
+	fpic := -fPIC
+	SHARED := -shared -Wl,-version-script=link.T
+	ARCH = arm64
+	HAVE_NEON = 1
+	BUILTIN_GPU = neon
+	USE_DYNAREC = 1
+	CFLAGS += -fomit-frame-pointer -ffast-math -DARM
+	CPUFLAGS += -march=armv8-a+crc -mfpu=neon-fp-armv8 -mcpu=cortex-a73 -mtune=cortex-a73.cortex-a53
+
 # OS X
 else ifeq ($(platform), osx)
    CFLAGS += $(LTO)
