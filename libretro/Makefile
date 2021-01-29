@@ -20,6 +20,9 @@ ifeq ($(platform),)
    else ifneq ($(findstring Darwin,$(shell uname -s)),)
       platform = osx
       arch = intel
+      ifeq ($(shell uname -p),arm64)
+         arch = arm
+      endif
       ifeq ($(shell uname -p),powerpc)
          arch = ppc
       endif
@@ -93,18 +96,32 @@ else ifeq ($(platform), osx)
    fpic := -fPIC
    SHARED := -dynamiclib
    arch = intel
+   ifeq ($(shell uname -p),arm64)
+      arch = arm
+   endif
    ifeq ($(shell uname -p),powerpc)
       arch = ppc
    endif
    ifeq ($(arch),ppc)
       CXXFLAGS += -DBLARGG_BIG_ENDIAN=1 -D__ppc__
    endif
+   MINVERSION =
    OSXVER = $(shell sw_vers -productVersion | cut -d. -f 2)
-   OSX_GT_MOJAVE = $(shell (( $(OSXVER) >= 14)) && echo "YES")
-   ifneq ($(OSX_GT_MOJAVE),YES)
-	#this breaks compiling on Mac OS Mojave
-      fpic += -mmacosx-version-min=10.1
+   OSX_LT_MAVERICKS = `(( $(OSXVER) <= 9)) && echo "YES"`
+   ifeq ($(OSX_LT_MAVERICKS),YES)
+   	   MINVERSION = -mmacosx-version-min=10.1
    endif
+
+   ifeq ($(CROSS_COMPILE),1)
+		TARGET_RULE   = -target $(LIBRETRO_APPLE_PLATFORM) -isysroot $(LIBRETRO_APPLE_ISYSROOT)
+		CFLAGS   += $(TARGET_RULE)
+		CPPFLAGS += $(TARGET_RULE)
+		CXXFLAGS += $(TARGET_RULE)
+		LDFLAGS  += $(TARGET_RULE)
+		MINVERSION =
+   endif
+
+   fpic += $(MINVERSION)
 
 # CTR (3DS)
 else ifeq ($(platform), ctr)
