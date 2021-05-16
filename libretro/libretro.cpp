@@ -145,6 +145,8 @@ void retro_set_input_state(retro_input_state_t cb)
 enum overscan_mode {
     OVERSCAN_CROP_ON,
     OVERSCAN_CROP_OFF,
+    OVERSCAN_CROP_12,
+    OVERSCAN_CROP_16,
     OVERSCAN_CROP_AUTO
 };
 enum aspect_mode {
@@ -443,6 +445,10 @@ static void update_variables(void)
         overscan_mode newval = OVERSCAN_CROP_AUTO;
         if (strcmp(var.value, "enabled") == 0)
             newval = OVERSCAN_CROP_ON;
+        else if (strcmp(var.value, "12_pixels") == 0)
+            newval = OVERSCAN_CROP_12;
+        else if (strcmp(var.value, "16_pixels") == 0)
+            newval = OVERSCAN_CROP_16;
         else if (strcmp(var.value, "disabled") == 0)
             newval = OVERSCAN_CROP_OFF;
 
@@ -826,6 +832,10 @@ void retro_get_system_av_info(struct retro_system_av_info *info)
     unsigned height = PPU.ScreenHeight;
     if (crop_overscan_mode == OVERSCAN_CROP_ON)
         height = SNES_HEIGHT;
+    else if (crop_overscan_mode == OVERSCAN_CROP_12)
+        height = 216;
+    else if (crop_overscan_mode == OVERSCAN_CROP_16)
+        height = 208;
     else if (crop_overscan_mode == OVERSCAN_CROP_OFF)
         height = SNES_HEIGHT_EXTENDED;
 
@@ -2027,6 +2037,32 @@ bool8 S9xDeinitUpdate(int width, int height)
         {
             overscan_offset = 7;
             height = SNES_HEIGHT;
+        }
+    }
+    else if (crop_overscan_mode == OVERSCAN_CROP_12)
+    {
+        if (height > 216 * 2)
+        {
+            overscan_offset = 8;
+            height = 216 * 2;
+        }
+        else if ((height > 216) && (height != 216 * 2))
+        {
+            overscan_offset = 4;
+            height = 216;
+        }
+    }
+    else if (crop_overscan_mode == OVERSCAN_CROP_16)
+    {
+        if (height > 208 * 2)
+        {
+            overscan_offset = 16;
+            height = 208 * 2;
+        }
+        else if ((height > 208) && (height != 208 * 2))
+        {
+            overscan_offset = 8;
+            height = 208;
         }
     }
     else if (crop_overscan_mode == OVERSCAN_CROP_OFF)
