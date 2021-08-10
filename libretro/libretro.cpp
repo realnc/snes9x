@@ -72,6 +72,7 @@ static retro_audio_sample_batch_t audio_batch_cb = NULL;
 static retro_input_poll_t poll_cb = NULL;
 static retro_input_state_t input_state_cb = NULL;
 
+static bool libretro_supports_option_categories = false;
 static bool libretro_supports_bitmasks = false;
 
 static snes_ntsc_t *snes_ntsc = NULL;
@@ -201,7 +202,29 @@ void retro_set_environment(retro_environment_t cb)
 
     cb(RETRO_ENVIRONMENT_SET_SUBSYSTEM_INFO,  (void*)subsystems);
 
-    libretro_set_core_options(environ_cb);
+
+    libretro_supports_option_categories = false;
+    libretro_set_core_options(environ_cb,
+            &libretro_supports_option_categories);
+
+    /* If frontend supports core option categories,
+     * show/hide toggle options are unused and should
+     * themselves be hidden */
+    if (libretro_supports_option_categories)
+    {
+        struct retro_core_option_display option_display;
+
+        option_display.visible = false;
+        option_display.key     = "snes9x_show_lightgun_settings";
+
+        environ_cb(RETRO_ENVIRONMENT_SET_CORE_OPTIONS_DISPLAY,
+                &option_display);
+
+        option_display.key     = "snes9x_show_advanced_av_settings";
+
+        environ_cb(RETRO_ENVIRONMENT_SET_CORE_OPTIONS_DISPLAY,
+                &option_display);
+    }
 
     static const struct retro_controller_description port_1[] = {
         { "None", RETRO_DEVICE_NONE },
@@ -672,12 +695,16 @@ static void update_variables(void)
         }
     }
 
-    /* Show/hide core options */
+    /* Show/hide core options
+     * > If frontend supports core option categories,
+     *   then show/hide toggle options are ignored,
+     *   and no other options should be hidden */
 
     var.key = "snes9x_show_lightgun_settings";
     var.value = NULL;
 
-    if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
+    if (!libretro_supports_option_categories &&
+        environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
     {
         bool show_lightgun_settings_prev = show_lightgun_settings;
 
@@ -715,7 +742,8 @@ static void update_variables(void)
     var.key = "snes9x_show_advanced_av_settings";
     var.value = NULL;
 
-    if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
+    if (!libretro_supports_option_categories &&
+        environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
     {
         bool show_advanced_av_settings_prev = show_advanced_av_settings;
 
@@ -1904,7 +1932,8 @@ void retro_deinit()
     free(screen_buffer);
     free(ntsc_screen_buffer);
 
-	libretro_supports_bitmasks = false;
+    libretro_supports_option_categories = false;
+    libretro_supports_bitmasks = false;
 }
 
 
