@@ -87,8 +87,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "pal",  "PAL" },
          { NULL, NULL },
       },
-      "auto",
-      NULL
+      "auto"
    },
    {
       "snes9x_aspect",
@@ -105,8 +104,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "pal",         "PAL" },
          { NULL, NULL },
       },
-      "4:3",
-      NULL
+      "4:3"
    },
    {
       "snes9x_overscan",
@@ -123,8 +121,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "disabled",    NULL },
          { NULL, NULL },
       },
-      "enabled",
-      NULL
+      "enabled"
    },
    {
       "snes9x_gfx_hires",
@@ -138,8 +135,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "disabled", NULL },
          { NULL, NULL },
       },
-      "enabled",
-      "bool"
+      "enabled"
    },
    {
       "snes9x_hires_blend",
@@ -154,8 +150,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "blur",     "Blur" },
          { NULL, NULL },
       },
-      "disabled",
-      NULL
+      "disabled"
    },
    {
       "snes9x_blargg",
@@ -173,8 +168,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "rgb",        "RGB" },
          { NULL, NULL },
       },
-      "disabled",
-      NULL
+      "disabled"
    },
    {
       "snes9x_audio_interpolation",
@@ -191,8 +185,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "linear",   "Linear" },
          { NULL, NULL },
       },
-      "gaussian",
-      NULL
+      "gaussian"
    },
    {
       "snes9x_up_down_allowed",
@@ -206,8 +199,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "enabled",  NULL },
          { NULL, NULL },
       },
-      "disabled",
-      "bool"
+      "disabled"
    },
    {
       "snes9x_overclock_superfx",
@@ -233,8 +225,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "500%", NULL },
          { NULL, NULL },
       },
-      "100%",
-      NULL
+      "100%"
    },
    {
       "snes9x_overclock_cycles",
@@ -250,8 +241,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "max",        "Max" },
          { NULL, NULL },
       },
-      "disabled",
-      NULL
+      "disabled"
    },
    {
       "snes9x_reduce_sprite_flicker",
@@ -265,8 +255,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "enabled",  NULL },
          { NULL, NULL },
       },
-      "disabled",
-      "bool"
+      "disabled"
    },
    {
       "snes9x_randomize_memory",
@@ -280,8 +269,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "enabled",  NULL },
          { NULL, NULL },
       },
-      "disabled",
-      "bool"
+      "disabled"
    },
    {
       "snes9x_block_invalid_vram_access",
@@ -295,8 +283,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "disabled", NULL },
          { NULL, NULL },
       },
-      "enabled",
-      "bool"
+      "enabled"
    },
    {
       "snes9x_echo_buffer_hack",
@@ -310,8 +297,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "enabled",  NULL },
          { NULL, NULL },
       },
-      "disabled",
-      "bool"
+      "disabled"
    },
    {
       "snes9x_show_lightgun_settings",
@@ -325,8 +311,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "disabled", NULL },
          { NULL, NULL },
       },
-      "disabled",
-      "bool"
+      "disabled"
    },
    {
       "snes9x_lightgun_mode",
@@ -340,8 +325,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "Touchscreen", NULL },
          { NULL, NULL },
       },
-      "Lightgun",
-      NULL
+      "Lightgun"
    },
    {
       "snes9x_superscope_reverse_buttons",
@@ -355,8 +339,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "enabled",  NULL },
          { NULL, NULL },
       },
-      "disabled",
-      "bool"
+      "disabled"
    },
    {
       "snes9x_superscope_crosshair",
@@ -385,8 +368,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "16", NULL },
          { NULL, NULL },
       },
-      "2",
-      "int"
+      "2"
    },
    {
       "snes9x_superscope_color",
@@ -428,8 +410,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "75% Grey (blend)", NULL },
          { NULL, NULL },
       },
-      "White",
-      NULL
+      "White"
    },
    {
       "snes9x_justifier1_crosshair",
@@ -458,8 +439,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "16", NULL },
          { NULL, NULL },
       },
-      "4",
-      "int"
+      "4"
    },
    {
       "snes9x_justifier1_color",
@@ -501,8 +481,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "Sky (blend)",      NULL },
          { NULL, NULL },
       },
-      "Blue",
-      NULL
+      "Blue"
    },
    {
       "snes9x_justifier2_crosshair",
@@ -531,8 +510,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "16", NULL },
          { NULL, NULL },
       },
-      "4",
-      "int"
+      "4"
    },
    {
       "snes9x_justifier2_color",
@@ -574,8 +552,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "Violet (blend)",   NULL },
          { NULL, NULL },
       },
-      "Pink",
-      NULL
+      "Pink"
    },
    {
       "snes9x_rifle_crosshair",
@@ -604,8 +581,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "16", NULL },
          { NULL, NULL },
       },
-      "2",
-      "int"
+      "2"
    },
    {
       "snes9x_rifle_color",
@@ -647,8 +623,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "75% Grey (blend)", NULL },
          { NULL, NULL },
       },
-      "White",
-      NULL
+      "White"
    },
    {
       "snes9x_show_advanced_av_settings",
@@ -662,8 +637,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "disabled", NULL },
          { NULL, NULL },
       },
-      "disabled",
-      "bool"
+      "disabled"
    },
    {
       "snes9x_layer_1",
@@ -677,8 +651,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "disabled", NULL },
          { NULL, NULL },
       },
-      "enabled",
-      "bool"
+      "enabled"
    },
    {
       "snes9x_layer_2",
@@ -692,8 +665,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "disabled", NULL },
          { NULL, NULL },
       },
-      "enabled",
-      "bool"
+      "enabled"
    },
    {
       "snes9x_layer_3",
@@ -707,8 +679,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "disabled", NULL },
          { NULL, NULL },
       },
-      "enabled",
-      "bool"
+      "enabled"
    },
    {
       "snes9x_layer_4",
@@ -722,8 +693,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "disabled", NULL },
          { NULL, NULL },
       },
-      "enabled",
-      "bool"
+      "enabled"
    },
    {
       "snes9x_layer_5",
@@ -737,8 +707,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "disabled", NULL },
          { NULL, NULL },
       },
-      "enabled",
-      "bool"
+      "enabled"
    },
    {
       "snes9x_gfx_clip",
@@ -752,8 +721,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "disabled", NULL },
          { NULL, NULL },
       },
-      "enabled",
-      "bool"
+      "enabled"
    },
    {
       "snes9x_gfx_transp",
@@ -767,8 +735,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "disabled", NULL },
          { NULL, NULL },
       },
-      "enabled",
-      "bool"
+      "enabled"
    },
    {
       "snes9x_sndchan_1",
@@ -782,8 +749,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "disabled", NULL },
          { NULL, NULL },
       },
-      "enabled",
-      "bool"
+      "enabled"
    },
    {
       "snes9x_sndchan_2",
@@ -797,8 +763,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "disabled", NULL },
          { NULL, NULL },
       },
-      "enabled",
-      "bool"
+      "enabled"
    },
    {
       "snes9x_sndchan_3",
@@ -812,8 +777,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "disabled", NULL },
          { NULL, NULL },
       },
-      "enabled",
-      "bool"
+      "enabled"
    },
    {
       "snes9x_sndchan_4",
@@ -827,8 +791,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "disabled", NULL },
          { NULL, NULL },
       },
-      "enabled",
-      "bool"
+      "enabled"
    },
    {
       "snes9x_sndchan_5",
@@ -842,8 +805,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "disabled", NULL },
          { NULL, NULL },
       },
-      "enabled",
-      "bool"
+      "enabled"
    },
    {
       "snes9x_sndchan_6",
@@ -857,8 +819,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "disabled", NULL },
          { NULL, NULL },
       },
-      "enabled",
-      "bool"
+      "enabled"
    },
    {
       "snes9x_sndchan_7",
@@ -872,8 +833,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "disabled", NULL },
          { NULL, NULL },
       },
-      "enabled",
-      "bool"
+      "enabled"
    },
    {
       "snes9x_sndchan_8",
@@ -887,10 +847,9 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "disabled", NULL },
          { NULL, NULL },
       },
-      "enabled",
-      "bool"
+      "enabled"
    },
-   { NULL, NULL, NULL, NULL, NULL, NULL, {{0}}, NULL, NULL },
+   { NULL, NULL, NULL, NULL, NULL, NULL, {{0}}, NULL },
 };
 
 struct retro_core_options_v2 options_us = {
