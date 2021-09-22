@@ -53,7 +53,7 @@ endif
 # Unix
 ifneq (,$(findstring unix,$(platform)))
    CFLAGS += $(LTO)
-   CXXFLAGS += $(LTO)
+   CXXFLAGS += $(LTO) -DUNZIP_SUPPORT -DSYSTEM_ZIP
    LDFLAGS += $(LTO)
    TARGET := $(TARGET_NAME)_libretro.so
    fpic := -fPIC
@@ -66,6 +66,7 @@ ifneq (,$(findstring unix,$(platform)))
    ifneq ($(findstring Haiku,$(shell uname -a)),)
       LIBS :=
    endif
+   LIBS += -lz -lminizip
 
    # ARM
    ifneq (,$(findstring armv,$(platform)))
