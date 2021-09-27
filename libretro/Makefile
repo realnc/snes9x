@@ -61,12 +61,12 @@ ifneq (,$(findstring unix,$(platform)))
    CC = gcc
    SHARED := -shared -z defs
    else
+   LIBS += -lz -lminizip
    SHARED := -shared -Wl,--version-script=link.T -Wl,-z,defs
    endif
    ifneq ($(findstring Haiku,$(shell uname -a)),)
       LIBS :=
    endif
-   LIBS += -lz -lminizip
 
    # ARM
    ifneq (,$(findstring armv,$(platform)))
