@@ -586,13 +586,14 @@ CXXFLAGS += -D_CRT_SECURE_NO_DEPRECATE
 # Windows
 else
    CFLAGS += $(LTO)
-   CXXFLAGS += $(LTO)
+   CXXFLAGS += $(LTO) -DUNZIP_SUPPORT -DSYSTEM_ZIP
    LDFLAGS += $(LTO)
    TARGET := $(TARGET_NAME)_libretro.dll
-   CC ?= gcc
-   CXX ?= g++
+   CC ?= (CROSS)gcc
+   CXX ?= (CROSS)g++
    SHARED := -shared -static-libgcc -static-libstdc++ -s -Wl,--version-script=link.T
    CXXFLAGS += -D__WIN32__
+   LIBS += -lz -lminizip -lbz2 -lcrypt32
 endif
 
 CORE_DIR := ..
