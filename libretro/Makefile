@@ -63,6 +63,9 @@ ifneq (,$(findstring unix,$(platform)))
    else
    LIBS += -lz
    SHARED := -shared -Wl,--version-script=link.T -Wl,-z,defs
+   INCFLAGS += -I$(CORE_DIR)/unzip
+   SOURCES_C += $(CORE_DIR)/unzip/unzip.c \
+                $(CORE_DIR)/unzip/ioapi.c
    endif
    ifneq ($(findstring Haiku,$(shell uname -a)),)
       LIBS :=
@@ -589,10 +592,13 @@ else
    CXXFLAGS += $(LTO) -DUNZIP_SUPPORT
    LDFLAGS += $(LTO)
    TARGET := $(TARGET_NAME)_libretro.dll
-   CC ?= (CROSS)gcc
-   CXX ?= (CROSS)g++
+   CC ?= gcc
+   CXX ?= g++
    SHARED := -shared -static-libgcc -static-libstdc++ -s -Wl,--version-script=link.T
    CXXFLAGS += -D__WIN32__
+   INCFLAGS += -I$(CORE_DIR)/unzip
+   SOURCES_C += $(CORE_DIR)/unzip/unzip.c \
+                $(CORE_DIR)/unzip/ioapi.c
    LIBS += -lz -lcrypt32
 endif
 
