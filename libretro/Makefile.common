@@ -35,6 +35,7 @@ SOURCES_CXX := $(CORE_DIR)/apu/apu.cpp \
 				 $(CORE_DIR)/fxemu.cpp \
 				 $(CORE_DIR)/gfx.cpp \
 				 $(CORE_DIR)/globals.cpp \
+				 $(CORE_DIR)/loadzip.cpp \
 				 $(CORE_DIR)/logger.cpp \
 				 $(CORE_DIR)/memmap.cpp \
 				 $(CORE_DIR)/obc1.cpp \
@@ -63,3 +64,14 @@ SOURCES_CXX := $(CORE_DIR)/apu/apu.cpp \
 				 $(CORE_DIR)/movie.cpp \
 				 $(CORE_DIR)/compat.cpp \
 				 $(CORE_DIR)/libretro/libretro.cpp
+
+ifneq (,$(findstring unix,$(platform)))
+   INCFLAGS += -I$(CORE_DIR)/unzip
+   SOURCES_C += $(CORE_DIR)/unzip/unzip.c \
+                $(CORE_DIR)/unzip/ioapi.c
+endif
+ifneq (,$(findstring win,$(platform)))
+   INCFLAGS += -I$(CORE_DIR)/unzip
+   SOURCES_C += $(CORE_DIR)/unzip/unzip.c \
+                $(CORE_DIR)/unzip/ioapi.c
+endif
