@@ -2,13 +2,15 @@ ifeq ($(LIBRETRO_COMM_DIR),)
 	LIBRETRO_COMM_DIR = $(CORE_DIR)/libretro/libretro-common
 endif
 
-INCFLAGS   = -I$(CORE_DIR)/libretro -I$(LIBRETRO_COMM_DIR)/include -I$(CORE_DIR) -I$(CORE_DIR)/apu/ -I$(CORE_DIR)/apu/bapu
+INCFLAGS   = -I$(CORE_DIR)/libretro -I$(LIBRETRO_COMM_DIR)/include -I$(CORE_DIR) -I$(CORE_DIR)/apu/ -I$(CORE_DIR)/apu/bapu -I$(CORE_DIR)/unzip
 
 ifneq (,$(findstring msvc2003,$(platform)))
 INCFLAGS += -I$(LIBRETRO_COMM_DIR)/include/compat/msvc
 endif
 
-SOURCES_C   := $(CORE_DIR)/filter/snes_ntsc.c
+SOURCES_C   := 				 $(CORE_DIR)/unzip/unzip.c \
+               				 $(CORE_DIR)/unzip/ioapi.c \
+                             $(CORE_DIR)/filter/snes_ntsc.c
 SOURCES_CXX := $(CORE_DIR)/apu/apu.cpp \
 				 $(CORE_DIR)/apu/bapu/dsp/sdsp.cpp \
 				 $(CORE_DIR)/apu/bapu/smp/smp.cpp \
@@ -35,6 +37,7 @@ SOURCES_CXX := $(CORE_DIR)/apu/apu.cpp \
 				 $(CORE_DIR)/fxemu.cpp \
 				 $(CORE_DIR)/gfx.cpp \
 				 $(CORE_DIR)/globals.cpp \
+ 				 $(CORE_DIR)/loadzip.cpp \
 				 $(CORE_DIR)/logger.cpp \
 				 $(CORE_DIR)/memmap.cpp \
 				 $(CORE_DIR)/obc1.cpp \
