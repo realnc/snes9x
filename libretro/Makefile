@@ -617,9 +617,6 @@ else
    CXX ?= g++
    SHARED := -shared -static-libgcc -static-libstdc++ -s -Wl,--version-script=link.T
    CXXFLAGS += -D__WIN32__
-   INCFLAGS += -I$(CORE_DIR)/unzip
-   SOURCES_C += $(CORE_DIR)/unzip/unzip.c \
-                $(CORE_DIR)/unzip/ioapi.c
    LIBS += -lz -lcrypt32
 endif
 
