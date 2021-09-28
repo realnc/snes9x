@@ -63,9 +63,6 @@ ifneq (,$(findstring unix,$(platform)))
    else
    LIBS += -lz
    SHARED := -shared -Wl,--version-script=link.T -Wl,-z,defs
-   INCFLAGS += -I$(CORE_DIR)/unzip
-   SOURCES_C += $(CORE_DIR)/unzip/unzip.c \
-                $(CORE_DIR)/unzip/ioapi.c
    endif
    ifneq ($(findstring Haiku,$(shell uname -a)),)
       LIBS :=
