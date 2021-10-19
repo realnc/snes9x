@@ -71,46 +71,19 @@ ifneq (,$(findstring unix,$(platform)))
    # ARM
    ifneq (,$(findstring armv,$(platform)))
       CXXFLAGS += -DARM
-   # Raspberry Pi
+   # Raspberry Pi variants
    else ifneq (,$(findstring rpi,$(platform)))
       CXXFLAGS += -DARM
+     ifneq (,$(findstring rpi1,$(platform)))
+	 CXXFLAGS += -marm -march=armv6j -mfpu=vfp -mfloat-abi=hard
+     else ifneq (,$(findstring rpi2,$(platform)))
+	 CXXFLAGS += -marm -mcpu=cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=hard
+     else ifneq (,$(findstring rpi3,$(platform)))
+	 CXXFLAGS += -marm -mcpu=cortex-a53 -mfpu=neon-fp-armv8 -mfloat-abi=hard
+     else ifneq (,$(findstring rpi4_64,$(platform)))
+	 CXXFLAGS += -march=armv8-a+crc+simd -mtune=cortex-a72
    endif
-
-# Raspberry Pi 2
-else ifneq (,$(findstring rpi2,$(platform)))
-	TARGET := $(TARGET_NAME)_libretro.so
-	fpic := -fPIC
-	SHARED := -shared -Wl,-version-script=link.T
-	ARCH = arm
-	HAVE_NEON = 1
-	BUILTIN_GPU = neon
-	USE_DYNAREC = 1
-	CFLAGS += -fomit-frame-pointer -ffast-math -DARM
-	CPUFLAGS += -marm -mcpu=cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=hard
-
-# Raspberry Pi 3 (64-bit)
-else ifneq (,$(findstring rpi3_64,$(platform)))
-	TARGET := $(TARGET_NAME)_libretro.so
-	fpic := -fPIC
-	SHARED := -shared -Wl,-version-script=link.T
-	ARCH = arm64
-	HAVE_NEON = 1
-	BUILTIN_GPU = neon
-	USE_DYNAREC = 1
-	CFLAGS += -fomit-frame-pointer -ffast-math -DARM
-	CPUFLAGS += -mfpu=neon-fp-armv8 -mcpu=cortex-a53 -mtune=cortex-a53
-
-# Raspberry Pi 4 (64-bit)
-else ifneq (,$(findstring rpi4_64,$(platform)))
-	TARGET := $(TARGET_NAME)_libretro.so
-	fpic := -fPIC
-	SHARED := -shared -Wl,-version-script=link.T
-	ARCH = arm64
-	HAVE_NEON = 1
-	BUILTIN_GPU = neon
-	USE_DYNAREC = 1
-	CFLAGS += -fomit-frame-pointer -ffast-math -DARM
-	CPUFLAGS += -mfpu=neon-fp-armv8 -mcpu=cortex-a72 -mtune=cortex-a72
+endif
 
 # ODROIDN2
 else ifneq (,$(findstring CortexA73_G12B,$(platform)))
