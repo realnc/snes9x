@@ -64,9 +64,6 @@ ifneq (,$(findstring unix,$(platform)))
    LIBS += -lz
    SHARED := -shared -Wl,--version-script=link.T -Wl,-z,defs
    endif
-   ifneq ($(findstring Haiku,$(shell uname -a)),)
-      LIBS :=
-   endif
 
    # ARM
    ifneq (,$(findstring armv,$(platform)))
