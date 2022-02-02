@@ -1,6 +1,6 @@
 project('snes9x-gtk',
         ['c', 'cpp'],
-        version: '1.60',
+        version: '1.61',
         meson_version: '>=0.46.0',
         default_options: ['cpp_std=c++17'])
 
@@ -165,12 +165,13 @@ endif
 
 wayland = get_option('wayland')
 if wayland
+  wayland_client_dep = dependency('wayland-client', required: false)
   wayland_dep = dependency('wayland-egl', required: false)
 
-  if wayland_dep.found()
+  if wayland_dep.found() and wayland_client_dep.found()
     args += '-DUSE_WAYLAND'
-    srcs += ['src/gtk_wayland_egl_context.cpp', 'src/gtk_wayland_egl_context.h']
-    deps += wayland_dep
+    srcs += ['src/gtk_wayland_egl_context.cpp', 'src/gtk_wayland_egl_context.h', 'src/wayland-idle-inhibit-unstable-v1.c']
+    deps += [wayland_dep, wayland_client_dep]
   else
     wayland = false
     warns += 'wayland-egl not found. Wayland will be disabled.'
