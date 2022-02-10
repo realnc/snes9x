@@ -49,6 +49,8 @@ static int g_screen_gun_height = SNES_HEIGHT;
 #define RETRO_GAME_TYPE_MULTI_CART      0x105 | 0x1000
 
 
+#define SNES_4_3 4.0f / 3.0f
+
 uint16 *screen_buffer = NULL;
 
 char g_rom_dir[1024];
@@ -150,6 +152,7 @@ enum overscan_mode {
 };
 enum aspect_mode {
     ASPECT_RATIO_4_3,
+    ASPECT_RATIO_4_3_PAR,
     ASPECT_RATIO_1_1,
     ASPECT_RATIO_NTSC,
     ASPECT_RATIO_PAL,
@@ -497,6 +500,8 @@ static void update_variables(void)
             newval = ASPECT_RATIO_PAL;
         else if (strcmp(var.value, "4:3") == 0)
             newval = ASPECT_RATIO_4_3;
+        else if (strcmp(var.value, "4:3 (PAR)") == 0)
+            newval = ASPECT_RATIO_4_3_PAR;
         else if (strcmp(var.value, "uncorrected") == 0)
             newval = ASPECT_RATIO_1_1;
 
@@ -827,6 +832,10 @@ void retro_get_system_info(struct retro_system_info *info)
 float get_aspect_ratio(unsigned width, unsigned height)
 {
     if (aspect_ratio_mode == ASPECT_RATIO_4_3)
+    {
+        return SNES_4_3;
+    }
+    else if (aspect_ratio_mode == ASPECT_RATIO_4_3_PAR)
     {
         return (4.0f * (MAX_SNES_HEIGHT - height)) / (3.0f * (MAX_SNES_WIDTH - width));
     }
