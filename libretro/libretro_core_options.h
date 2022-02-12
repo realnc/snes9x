@@ -98,7 +98,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
       NULL,
       {
          { "4:3",         NULL },
-         { "4:3 (PAR)",   NULL },
+         { "4:3 scaled",  "4:3 (Preserved)" },
          { "uncorrected", "Uncorrected" },
          { "auto",        "Auto" },
          { "ntsc",        "NTSC" },
