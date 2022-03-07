@@ -118,6 +118,7 @@ struct retro_core_option_v2_definition option_defs_tr[] = {
       NULL,
       {
          { "4:3",         NULL },
+         { "4:3 scaled",  "4:3 (Korunmuş)" },
          { "uncorrected", "Düzeltilmemiş" },
          { "auto",        "Otomatik" },
          { "ntsc",        "NTSC" },
