@@ -16,6 +16,8 @@
 #include "conffile.h"
 #include "crosshairs.h"
 #include <stdio.h>
+#include <vector>
+
 #ifdef _WIN32
 #include <direct.h>
 #else
@@ -793,28 +795,6 @@ static void update_variables(void)
     }
 }
 
-static void S9xAudioCallback(void*)
-{
-    const int BUFFER_SIZE = 256;
-    // This is called every time 128 to 132 samples are generated, which happens about 8 times per frame.  A buffer size of 256 samples is enough here.
-    static int16_t audio_buf[BUFFER_SIZE];
-
-    size_t avail = S9xGetSampleCount();
-    while (avail >= BUFFER_SIZE)
-    {
-        //this loop will never be entered, but handle oversized sample counts just in case
-        S9xMixSamples((uint8*)audio_buf, BUFFER_SIZE);
-        audio_batch_cb(audio_buf, BUFFER_SIZE >> 1);
-
-        avail -= BUFFER_SIZE;
-    }
-    if (avail > 0)
-    {
-        S9xMixSamples((uint8*)audio_buf, avail);
-        audio_batch_cb(audio_buf, avail >> 1);
-    }
-}
-
 void retro_get_system_info(struct retro_system_info *info)
 {
     memset(info,0,sizeof(retro_system_info));
@@ -1422,10 +1402,10 @@ void retro_init(void)
         exit(1);
     }
 
-    S9xInitSound(0);
+    S9xInitSound(32);
 
     S9xSetSoundMute(FALSE);
-    S9xSetSamplesAvailableCallback(S9xAudioCallback, NULL);
+    S9xSetSamplesAvailableCallback(NULL, NULL);
 
     GFX.Pitch = MAX_SNES_WIDTH_NTSC * sizeof(uint16);
     screen_buffer = (uint16*) calloc(1, GFX.Pitch * (MAX_SNES_HEIGHT + 16));
@@ -1932,7 +1912,16 @@ void retro_run()
     poll_cb();
     report_buttons();
     S9xMainLoop();
-    S9xAudioCallback(NULL);
+
+    static std::vector<int16_t> audio_buffer;
+
+    size_t avail = S9xGetSampleCount();
+
+    if (audio_buffer.size() < avail)
+        audio_buffer.resize(avail);
+
+    S9xMixSamples((uint8*)&audio_buffer[0], avail);
+    audio_batch_cb(&audio_buffer[0], avail >> 1);
 }
 
 void retro_deinit()
