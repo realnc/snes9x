@@ -29,7 +29,6 @@
 #include "filter/snes_ntsc.h"
 
 #define RETRO_DEVICE_JOYPAD_MULTITAP ((1 << 8) | RETRO_DEVICE_JOYPAD)
-#define RETRO_DEVICE_JOYPAD_DOUBLE_MULTITAP ((2 << 8) | RETRO_DEVICE_JOYPAD)
 #define RETRO_DEVICE_LIGHTGUN_SUPER_SCOPE ((1 << 8) | RETRO_DEVICE_LIGHTGUN)
 #define RETRO_DEVICE_LIGHTGUN_JUSTIFIER ((2 << 8) | RETRO_DEVICE_LIGHTGUN)
 #define RETRO_DEVICE_LIGHTGUN_JUSTIFIER_2 ((3 << 8) | RETRO_DEVICE_LIGHTGUN)
@@ -884,7 +883,7 @@ void retro_reset()
     S9xSoftReset();
 }
 
-static unsigned snes_devices[9];
+static unsigned snes_devices[8];
 void retro_set_controller_port_device(unsigned port, unsigned device)
 {
     if (port < 8)
@@ -899,12 +898,6 @@ void retro_set_controller_port_device(unsigned port, unsigned device)
             case RETRO_DEVICE_JOYPAD_MULTITAP:
                 S9xSetController(port, CTL_MP5, port * offset, port * offset + 1, port * offset + 2, port * offset + 3);
                 snes_devices[port] = RETRO_DEVICE_JOYPAD_MULTITAP;
-                break;
-            case RETRO_DEVICE_JOYPAD_DOUBLE_MULTITAP:
-                S9xSetController(0, CTL_MP5, 0, 1, 2, 3);
-                S9xSetController(1, CTL_MP5, 4, 5, 6, 7);
-                snes_devices[0] = RETRO_DEVICE_JOYPAD_MULTITAP;
-                snes_devices[1] = RETRO_DEVICE_JOYPAD_MULTITAP;
                 break;
             case RETRO_DEVICE_MOUSE:
                 S9xSetController(port, CTL_MOUSE, port, 0, 0, 0);
@@ -1834,23 +1827,6 @@ static void report_buttons()
 
             case RETRO_DEVICE_JOYPAD_MULTITAP:
                 for (int j = 0; j < 4; j++)
-                {
-                    if (libretro_supports_bitmasks)
-                        joy_bits = input_state_cb(port * offset + j, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_MASK);
-                    else
-                    {
-                        joy_bits = 0;
-                        for (int i = 0; i < (RETRO_DEVICE_ID_JOYPAD_R3+1); i++)
-                            joy_bits |= input_state_cb(port * offset + j, RETRO_DEVICE_JOYPAD, 0, i) ? (1 << i) : 0;
-                    }
-
-                    for (int i = BTN_FIRST; i <= BTN_LAST; i++)
-                        S9xReportButton(MAKE_BUTTON(port * offset + j + 1, i), joy_bits & (1 << i));
-				}
-                break;
-			
-            case RETRO_DEVICE_JOYPAD_DOUBLE_MULTITAP:
-                for (int j = 0; j < 8; j++)
                 {
                     if (libretro_supports_bitmasks)
                         joy_bits = input_state_cb(port * offset + j, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_MASK);
