@@ -29,6 +29,7 @@
 #include "filter/snes_ntsc.h"
 
 #define RETRO_DEVICE_JOYPAD_MULTITAP ((1 << 8) | RETRO_DEVICE_JOYPAD)
+#define RETRO_DEVICE_JOYPAD_DOUBLE_MULTITAP ((2 << 8) | RETRO_DEVICE_JOYPAD)
 #define RETRO_DEVICE_LIGHTGUN_SUPER_SCOPE ((1 << 8) | RETRO_DEVICE_LIGHTGUN)
 #define RETRO_DEVICE_LIGHTGUN_JUSTIFIER ((2 << 8) | RETRO_DEVICE_LIGHTGUN)
 #define RETRO_DEVICE_LIGHTGUN_JUSTIFIER_2 ((3 << 8) | RETRO_DEVICE_LIGHTGUN)
@@ -883,7 +884,7 @@ void retro_reset()
     S9xSoftReset();
 }
 
-static unsigned snes_devices[8];
+static unsigned snes_devices[9];
 void retro_set_controller_port_device(unsigned port, unsigned device)
 {
     if (port < 8)
@@ -898,6 +899,12 @@ void retro_set_controller_port_device(unsigned port, unsigned device)
             case RETRO_DEVICE_JOYPAD_MULTITAP:
                 S9xSetController(port, CTL_MP5, port * offset, port * offset + 1, port * offset + 2, port * offset + 3);
                 snes_devices[port] = RETRO_DEVICE_JOYPAD_MULTITAP;
+                break;
+            case RETRO_DEVICE_JOYPAD_DOUBLE_MULTITAP:
+                S9xSetController(0, CTL_MP5, 0, 1, 2, 3);
+                S9xSetController(1, CTL_MP5, 4, 5, 6, 7);
+                snes_devices[0] = RETRO_DEVICE_JOYPAD_MULTITAP;
+                snes_devices[1] = RETRO_DEVICE_JOYPAD_MULTITAP;
                 break;
             case RETRO_DEVICE_MOUSE:
                 S9xSetController(port, CTL_MOUSE, port, 0, 0, 0);
@@ -1052,7 +1059,46 @@ static void init_descriptors(void)
         { 4, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_R,		"R" },
         { 4, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_SELECT,	"Select" },
         { 4, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_START,		"Start" },
+	    
+        { 5, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_LEFT,  "D-Pad Left" },
+        { 5, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_UP,		"D-Pad Up" },
+        { 5, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_DOWN,  "D-Pad Down" },
+        { 5, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_RIGHT, "D-Pad Right" },
+        { 5, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_B,		"B" },
+        { 5, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_A,		"A" },
+        { 5, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_X,		"X" },
+        { 5, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_Y,		"Y" },
+        { 5, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_L,		"L" },
+        { 5, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_R,		"R" },
+        { 5, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_SELECT,	"Select" },
+        { 5, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_START,		"Start" },
+	    
+        { 6, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_LEFT,  "D-Pad Left" },
+        { 6, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_UP,		"D-Pad Up" },
+        { 6, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_DOWN,  "D-Pad Down" },
+        { 6, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_RIGHT, "D-Pad Right" },
+        { 6, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_B,		"B" },
+        { 6, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_A,		"A" },
+        { 6, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_X,		"X" },
+        { 6, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_Y,		"Y" },
+        { 6, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_L,		"L" },
+        { 6, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_R,		"R" },
+        { 6, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_SELECT,	"Select" },
+        { 6, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_START,		"Start" },
 
+        { 7, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_LEFT,  "D-Pad Left" },
+        { 7, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_UP,		"D-Pad Up" },
+        { 7, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_DOWN,  "D-Pad Down" },
+        { 7, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_RIGHT, "D-Pad Right" },
+        { 7, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_B,		"B" },
+        { 7, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_A,		"A" },
+        { 7, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_X,		"X" },
+        { 7, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_Y,		"Y" },
+        { 7, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_L,		"L" },
+        { 7, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_R,		"R" },
+        { 7, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_SELECT,	"Select" },
+        { 7, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_START,		"Start" },
+	    
         { 0, 0, 0, 0, NULL },
     };
 
@@ -1437,6 +1483,9 @@ void retro_init(void)
 #define PAD_3 3
 #define PAD_4 4
 #define PAD_5 5
+#define PAD_6 6
+#define PAD_7 7
+#define PAD_8 8
 
 #define BTN_B RETRO_DEVICE_ID_JOYPAD_B
 #define BTN_Y RETRO_DEVICE_ID_JOYPAD_Y
@@ -1554,6 +1603,44 @@ static void map_buttons()
     MAP_BUTTON(MAKE_BUTTON(PAD_5, BTN_UP), "Joypad5 Up");
     MAP_BUTTON(MAKE_BUTTON(PAD_5, BTN_DOWN), "Joypad5 Down");
 
+    MAP_BUTTON(MAKE_BUTTON(PAD_6, BTN_A), "Joypad6 A");
+    MAP_BUTTON(MAKE_BUTTON(PAD_6, BTN_B), "Joypad6 B");
+    MAP_BUTTON(MAKE_BUTTON(PAD_6, BTN_X), "Joypad6 X");
+    MAP_BUTTON(MAKE_BUTTON(PAD_6, BTN_Y), "Joypad6 Y");
+    MAP_BUTTON(MAKE_BUTTON(PAD_6, BTN_SELECT), "Joypad6 Select");
+    MAP_BUTTON(MAKE_BUTTON(PAD_6, BTN_START), "Joypad6 Start");
+    MAP_BUTTON(MAKE_BUTTON(PAD_6, BTN_L), "Joypad6 L");
+    MAP_BUTTON(MAKE_BUTTON(PAD_6, BTN_R), "Joypad6 R");
+    MAP_BUTTON(MAKE_BUTTON(PAD_6, BTN_LEFT), "Joypad6 Left");
+    MAP_BUTTON(MAKE_BUTTON(PAD_6, BTN_RIGHT), "Joypad6 Right");
+    MAP_BUTTON(MAKE_BUTTON(PAD_6, BTN_UP), "Joypad6 Up");
+    MAP_BUTTON(MAKE_BUTTON(PAD_6, BTN_DOWN), "Joypad6 Down");
+	
+    MAP_BUTTON(MAKE_BUTTON(PAD_7, BTN_A), "Joypad7 A");
+    MAP_BUTTON(MAKE_BUTTON(PAD_7, BTN_B), "Joypad7 B");
+    MAP_BUTTON(MAKE_BUTTON(PAD_7, BTN_X), "Joypad7 X");
+    MAP_BUTTON(MAKE_BUTTON(PAD_7, BTN_Y), "Joypad7 Y");
+    MAP_BUTTON(MAKE_BUTTON(PAD_7, BTN_SELECT), "Joypad7 Select");
+    MAP_BUTTON(MAKE_BUTTON(PAD_7, BTN_START), "Joypad7 Start");
+    MAP_BUTTON(MAKE_BUTTON(PAD_7, BTN_L), "Joypad7 L");
+    MAP_BUTTON(MAKE_BUTTON(PAD_7, BTN_R), "Joypad7 R");
+    MAP_BUTTON(MAKE_BUTTON(PAD_7, BTN_LEFT), "Joypad7 Left");
+    MAP_BUTTON(MAKE_BUTTON(PAD_7, BTN_RIGHT), "Joypad7 Right");
+    MAP_BUTTON(MAKE_BUTTON(PAD_7, BTN_UP), "Joypad7 Up");
+    MAP_BUTTON(MAKE_BUTTON(PAD_7, BTN_DOWN), "Joypad7 Down");
+	
+    MAP_BUTTON(MAKE_BUTTON(PAD_8, BTN_A), "Joypad8 A");
+    MAP_BUTTON(MAKE_BUTTON(PAD_8, BTN_B), "Joypad8 B");
+    MAP_BUTTON(MAKE_BUTTON(PAD_8, BTN_X), "Joypad8 X");
+    MAP_BUTTON(MAKE_BUTTON(PAD_8, BTN_Y), "Joypad8 Y");
+    MAP_BUTTON(MAKE_BUTTON(PAD_8, BTN_SELECT), "Joypad8 Select");
+    MAP_BUTTON(MAKE_BUTTON(PAD_8, BTN_START), "Joypad8 Start");
+    MAP_BUTTON(MAKE_BUTTON(PAD_8, BTN_L), "Joypad8 L");
+    MAP_BUTTON(MAKE_BUTTON(PAD_8, BTN_R), "Joypad8 R");
+    MAP_BUTTON(MAKE_BUTTON(PAD_8, BTN_LEFT), "Joypad8 Left");
+    MAP_BUTTON(MAKE_BUTTON(PAD_8, BTN_RIGHT), "Joypad8 Right");
+    MAP_BUTTON(MAKE_BUTTON(PAD_8, BTN_UP), "Joypad8 Up");
+    MAP_BUTTON(MAKE_BUTTON(PAD_8, BTN_DOWN), "Joypad8 Down");
 }
 
 static int16_t snes_mouse_state[2][2] = {{0}, {0}};
@@ -1747,6 +1834,23 @@ static void report_buttons()
 
             case RETRO_DEVICE_JOYPAD_MULTITAP:
                 for (int j = 0; j < 4; j++)
+                {
+                    if (libretro_supports_bitmasks)
+                        joy_bits = input_state_cb(port * offset + j, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_MASK);
+                    else
+                    {
+                        joy_bits = 0;
+                        for (int i = 0; i < (RETRO_DEVICE_ID_JOYPAD_R3+1); i++)
+                            joy_bits |= input_state_cb(port * offset + j, RETRO_DEVICE_JOYPAD, 0, i) ? (1 << i) : 0;
+                    }
+
+                    for (int i = BTN_FIRST; i <= BTN_LAST; i++)
+                        S9xReportButton(MAKE_BUTTON(port * offset + j + 1, i), joy_bits & (1 << i));
+				}
+                break;
+			
+            case RETRO_DEVICE_JOYPAD_DOUBLE_MULTITAP:
+                for (int j = 0; j < 8; j++)
                 {
                     if (libretro_supports_bitmasks)
                         joy_bits = input_state_cb(port * offset + j, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_MASK);
